@@ -19,11 +19,6 @@ void MainWindow::on_pushButton_clicked()
 }
 
 void MainWindow::exchangeValue(){
-    QString labelValue = getLabelValue();
-    ui->textEdit->setText(labelValue);
-}
+    ui->label->setText(ui->textEdit->toPlainText());
 
-QString MainWindow::getLabelValue(){
-    QString labelValue = ui->label->text();
-    return labelValue;
 }
