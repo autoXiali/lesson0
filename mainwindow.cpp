@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "QMenu"
 #include "QMessageBox"
+#include "NewDialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -12,10 +13,13 @@ MainWindow::MainWindow(QWidget *parent) :
     QAction *about=menu->addAction("about");
     QAction *exit=menu->addAction("exit");
     ui->menuBar->addMenu(menu);
-    ui->menuBar->setCornerWidget(NULL,Qt::TopLeftCorner);
     ui->menuBar->setDefaultUp(true);
     connect(about,SIGNAL(triggered()),this,SLOT(showSth()));
     connect(exit,SIGNAL(triggered()),this,SLOT(exit()));
+
+    NewDialog *myDialog = new NewDialog();
+    QObject::connect(ui->pushButton,SIGNAL(clicked()), myDialog, SLOT(show()));
+    QObject::connect(myDialog,SIGNAL(sendString(QString)), this, SLOT(lineEditGetTem(QString)));
 }
 
 MainWindow::~MainWindow()
@@ -25,13 +29,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    exchangeValue();
+//    exchangeValue();
 }
 
-void MainWindow::exchangeValue(){
-    ui->label->setText(ui->textEdit->toPlainText());
-
-}
+//void MainWindow::exchangeValue(){
+//    ui->label->setText(ui->textEdit->toPlainText());
+//}
 
 void MainWindow::showSth(){
     QMessageBox::about(NULL,"about us","all right reserved");
@@ -39,4 +42,7 @@ void MainWindow::showSth(){
 void MainWindow::exit(){
     QApplication* app;
     app->exit(0);
+}
+void MainWindow::lineEditGetTem(QString str){
+    ui->label->setText(str);
 }

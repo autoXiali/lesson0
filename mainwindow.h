@@ -20,9 +20,11 @@ private slots:
     void on_pushButton_clicked();
     void exit();
     void showSth();
+    void lineEditGetTem(QString str);
 
 private:
     Ui::MainWindow *ui;
 };
+
 
 #endif // MAINWINDOW_H
