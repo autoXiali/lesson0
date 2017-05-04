@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "NewDialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -21,9 +22,14 @@ private slots:
     void exit();
     void showSth();
     void lineEditGetTem(QString str);
+    void sendText();
 
 private:
     Ui::MainWindow *ui;
+    NewDialog *myDialog = new NewDialog();
+
+signals:
+    sendToDialog(QString);
 };
 
 

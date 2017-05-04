@@ -6,16 +6,16 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QCheckBox>
+#include <QDebug>
 
 NewDialog::NewDialog(QWidget *parent):
     QDialog(parent)
 
  {
-    MainWindow *mw = new MainWindow(this);
-    //创建了一个带有快捷键ALT+W的标签
-      QLabel *label = new QLabel(tr("edit &sth:"));
+//    //创建了一个带有快捷键ALT+W的标签
+//      label = new QLabel(tr("edit &sth:"));
 
-      QLineEdit *lineEdit = new QLineEdit;
+//      lineEdit = new QLineEdit;
 
       //设置编辑器作为标签的伙伴。按下标签的快捷键时，lineEdit会接受焦点。
       label->setBuddy(lineEdit);
@@ -38,12 +38,12 @@ NewDialog::NewDialog(QWidget *parent):
 //      QObject::connect(lineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(enableFindButton(const QString &)));
 
       //当点击Find按钮时，会调用本类的findClicked方法.
-      QObject::connect(findButton,SIGNAL(clicked()),this,SLOT(findClicked()));
+      QObject::connect(findButton,SIGNAL(clicked()),this,SLOT(doSth()));
 
       //当点击Close按钮时，会调用本类或者父类的close方法
       QObject::connect(closeButton,SIGNAL(clicked()),this,SLOT(close()));
 
-      //水平布局  加入部件label  lineEdit
+//      //水平布局  加入部件label  lineEdit
       QHBoxLayout *topLeftLayout = new QHBoxLayout;
       topLeftLayout->addWidget(label);
       topLeftLayout->addWidget(lineEdit);
@@ -73,9 +73,15 @@ NewDialog::NewDialog(QWidget *parent):
 NewDialog::~NewDialog(){
     delete ui;
 }
-NewDialog::close(){
-
+void NewDialog::showLabel(QString str){
+    qDebug()<<"mainwindow传递的值"+str;
+    label->setText(str);
 }
-NewDialog::findClicked(){
-
+void NewDialog::doSth(){
+    MainWindow *mainWindow = new MainWindow();
+    QString textValue = lineEdit->text();
+    qDebug()<<"返回给mainwindow的值"+textValue;
+    emit sendToMain(textValue);
+    QObject::connect(this,SIGNAL(sendToMain(QString)),mainWindow,SLOT());
 }
+

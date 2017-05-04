@@ -17,9 +17,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(about,SIGNAL(triggered()),this,SLOT(showSth()));
     connect(exit,SIGNAL(triggered()),this,SLOT(exit()));
 
-    NewDialog *myDialog = new NewDialog();
+//    NewDialog *myDialog = new NewDialog();
+
+
     QObject::connect(ui->pushButton,SIGNAL(clicked()), myDialog, SLOT(show()));
-    QObject::connect(myDialog,SIGNAL(sendString(QString)), this, SLOT(lineEditGetTem(QString)));
+    QObject::connect(ui->pushButton,SIGNAL(clicked()), this, SLOT(sendText()));
+
+    QObject::connect(myDialog,SIGNAL(sendToMain(QString)), this, SLOT(lineEditGetTem(QString)));
 }
 
 MainWindow::~MainWindow()
@@ -45,4 +49,9 @@ void MainWindow::exit(){
 }
 void MainWindow::lineEditGetTem(QString str){
     ui->label->setText(str);
+}
+void MainWindow::sendText(){
+    QString textValue = ui->textEdit->toPlainText();
+    emit sendToDialog(textValue);
+    QObject::connect(this,SIGNAL(sendToDialog(QString)), myDialog, SLOT(showLabel(QString)));
 }

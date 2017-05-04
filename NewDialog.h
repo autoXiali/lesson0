@@ -1,6 +1,8 @@
 #ifndef NEWDIALOG_H
 #define NEWDIALOG_H
 #include <QDialog>
+#include <QLabel>
+#include <QLineEdit>
 
 namespace Ui {
     class NewDialog;
@@ -15,11 +17,16 @@ public:
     ~NewDialog();
 
 private slots:
-    void findClicked();
-    void close();
+    void doSth();
+    void showLabel(QString str);
 
 private:
     Ui::NewDialog *ui;
+    QLabel *label=new QLabel("dialog");
+    QLineEdit *lineEdit = new QLineEdit;
+
+signals:
+    sendToMain(QString);
 };
 
 #endif // NEWDIALOG_H
