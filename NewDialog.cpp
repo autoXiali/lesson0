@@ -82,6 +82,5 @@ void NewDialog::doSth(){
     QString textValue = lineEdit->text();
     qDebug()<<"返回给mainwindow的值"+textValue;
     emit sendToMain(textValue);
-    QObject::connect(this,SIGNAL(sendToMain(QString)),mainWindow,SLOT());
 }
 

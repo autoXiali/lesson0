@@ -26,7 +26,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    NewDialog *myDialog = new NewDialog();
+
 
 signals:
     sendToDialog(QString);
